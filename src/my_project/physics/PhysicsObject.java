@@ -10,14 +10,21 @@ public class PhysicsObject extends GraphicalObject {
 
     @Override
     public void update(double dt){
+        this.x = this.x + dt*velocity.x;
+        this.y = this.y + dt*velocity.y;
+
+
         //add physics collision calculation
     }
     public void applyForce(double fx, double fy){
-
-    };
-    public void applyImpulse(){
+        velocity.x = velocity.x + (fx/mass);
+        velocity.y = velocity.y + (fy/mass);
+    }
+    public void applyImpulse(double ix, double iy){
         //TODO Impulse
-    };
+        velocity.x=(mass*velocity.x+ix)/mass;
+        velocity.y=(mass*velocity.y+iy)/mass;
+    }
 
     public void setVelocity(Vec2d velocity) {
         this.velocity = velocity;
