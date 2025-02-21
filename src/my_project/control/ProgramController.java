@@ -6,6 +6,8 @@ import my_project.model.House;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
+
+import my_project.model.TestObject;
 import my_project.physics.*;
 
 /**
@@ -15,7 +17,7 @@ import my_project.physics.*;
 public class ProgramController {
 
     //Attribute
-
+    TestObject testObject;
 
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
@@ -36,11 +38,13 @@ public class ProgramController {
      */
     public void startProgram() {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
-        House firstHouse = new House();
+        testObject = new TestObject(200, 200, 100, 100);
+        viewController.draw(testObject);
+        viewController.register(testObject);
 
         //Damit die draw-Methode des Objekts hinter firstHouse aufgerufen wird,
         //muss dem ViewController-Objekt mitgeteilt werden, dass es das House-Objekt zeichnen soll.
-        viewController.draw(firstHouse);
+
     }
 
     /**

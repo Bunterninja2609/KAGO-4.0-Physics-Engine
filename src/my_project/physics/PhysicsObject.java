@@ -1,15 +1,17 @@
 package my_project.physics;
 
 import KAGO_framework.model.GraphicalObject;
+import KAGO_framework.model.InteractiveGraphicalObject;
+import KAGO_framework.view.DrawTool;
 import com.sun.javafx.geom.Vec2d;
 
-public class PhysicsObject extends GraphicalObject {
+public class PhysicsObject extends InteractiveGraphicalObject {
     protected double mass;
     protected Vec2d velocity;
     protected String hitboxShape = "rectangle";//circle, rectangle
 
-    @Override
-    public void update(double dt){
+
+    public void Physicsupdate(double dt){
         this.x = this.x + dt*velocity.x;
         this.y = this.y + dt*velocity.y;
 
@@ -50,5 +52,12 @@ public class PhysicsObject extends GraphicalObject {
     }
     public String getHitboxShape() {
         return hitboxShape;
+    }
+    public void drawHitbox(DrawTool drawTool){
+        if (hitboxShape.equals("rectangle")){
+            drawTool.drawRectangle(x,y,width,height);
+        }else if (hitboxShape.equals("circle")){
+            drawTool.drawCircle(x,y,radius);
+        }
     }
 }

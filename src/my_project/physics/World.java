@@ -21,4 +21,8 @@ public class World {
     public void createCollisionPoint(PhysicsObject po1, PhysicsObject po2) {
         collisionPoints.add(new CollisionPoint(po1, po2));
     }
+    public void addPhysicsObject(PhysicsObject p) {
+        physicsObjects.add(p);
+    }
+
 }
