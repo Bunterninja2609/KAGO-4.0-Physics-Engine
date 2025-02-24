@@ -6,11 +6,18 @@ import java.util.ArrayList;
 
 public class World {
     private Vec2d gravity;
+    private double pixelPerMeterRatio;
     private ArrayList<PhysicsObject> physicsObjects;
     private ArrayList<CollisionPoint> collisionPoints;
-    public World() {}
+    public World(double pixelPerMeterRatio) {
+        physicsObjects = new ArrayList<>();
+        collisionPoints = new ArrayList<>();
+        this.pixelPerMeterRatio = pixelPerMeterRatio;
+    }
     public void update(double dt) {
-
+        for (PhysicsObject physicsObject : physicsObjects) {
+            physicsObject.physicsUpdate(dt);
+        }
     }
     public void resolveCollisionPoints() {
         for (CollisionPoint collisionPoint : collisionPoints) {
@@ -22,7 +29,11 @@ public class World {
         collisionPoints.add(new CollisionPoint(po1, po2));
     }
     public void addPhysicsObject(PhysicsObject p) {
+        //*
         physicsObjects.add(p);
+        p.setMeter(pixelPerMeterRatio);
+        //*/
+
     }
 
 }

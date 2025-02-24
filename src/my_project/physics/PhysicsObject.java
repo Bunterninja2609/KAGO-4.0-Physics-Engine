@@ -6,15 +6,19 @@ import KAGO_framework.view.DrawTool;
 import com.sun.javafx.geom.Vec2d;
 
 public class PhysicsObject extends InteractiveGraphicalObject {
-    protected double mass;
-    protected Vec2d velocity;
+    protected double mass = 1;//kg
+    protected Vec2d velocity;//in m/s
+    protected Vec2d physicsPosition = new Vec2d(0, 0); //in m
+
+    private double pixelPerMeterRatio = 1.0;
     protected String hitboxShape = "rectangle";//circle, rectangle
 
 
-    public void Physicsupdate(double dt){
-        this.x = this.x + dt*velocity.x;
-        this.y = this.y + dt*velocity.y;
 
+    public void physicsUpdate(double dt){
+        physicsPosition.x = physicsPosition.x + dt*velocity.x;
+        physicsPosition.y = physicsPosition.y + dt*velocity.y;
+        calculatePosition();
 
         //add physics collision calculation
     }
@@ -59,5 +63,25 @@ public class PhysicsObject extends InteractiveGraphicalObject {
         }else if (hitboxShape.equals("circle")){
             drawTool.drawCircle(x,y,radius);
         }
+    }
+    public void setMeter(double pixelPerMeterRatio){
+        this.pixelPerMeterRatio = pixelPerMeterRatio;
+        calculatePhysicsPosition();
+    }
+    public double getMeter(){
+        return pixelPerMeterRatio;
+    }
+    public void setPosition(double x, double y){
+        this.x = x;
+        this.y = y;
+        calculatePhysicsPosition();
+    }
+    public void calculatePhysicsPosition(){
+        physicsPosition.x = x/pixelPerMeterRatio;
+        physicsPosition.y = y/pixelPerMeterRatio;
+    }
+    public void calculatePosition(){
+        x = physicsPosition.x*pixelPerMeterRatio;
+        y = physicsPosition.y*pixelPerMeterRatio;
     }
 }

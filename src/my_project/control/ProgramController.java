@@ -2,7 +2,6 @@ package my_project.control;
 
 import KAGO_framework.control.DatabaseController;
 import KAGO_framework.control.ViewController;
-import my_project.model.House;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -18,6 +17,7 @@ public class ProgramController {
 
     //Attribute
     TestObject testObject;
+    World world = new World(64);
 
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
@@ -38,10 +38,10 @@ public class ProgramController {
      */
     public void startProgram() {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
-        testObject = new TestObject(200, 200, 100, 100);
+        testObject = new TestObject(200, 200, 100, 100, 10, 0);
         viewController.draw(testObject);
         viewController.register(testObject);
-
+        world.addPhysicsObject(testObject);
         //Damit die draw-Methode des Objekts hinter firstHouse aufgerufen wird,
         //muss dem ViewController-Objekt mitgeteilt werden, dass es das House-Objekt zeichnen soll.
 
@@ -54,7 +54,9 @@ public class ProgramController {
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-
+        System.out.println(testObject.getVelocityX());
+        System.out.println(testObject.getMeter());
+        world.update(dt);
         
     }
 
