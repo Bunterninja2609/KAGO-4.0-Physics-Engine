@@ -5,10 +5,13 @@ import KAGO_framework.model.InteractiveGraphicalObject;
 import KAGO_framework.view.DrawTool;
 import com.sun.javafx.geom.Vec2d;
 
+import java.util.ArrayList;
+
 public class PhysicsObject extends InteractiveGraphicalObject {
     protected double mass = 1;//kg
     protected Vec2d velocity;//in m/s
     protected Vec2d physicsPosition = new Vec2d(0, 0); //in m
+    protected ArrayList<Vec2d> forces = new ArrayList<Vec2d>();
 
     private double pixelPerMeterRatio = 1.0;
     protected String hitboxShape = "rectangle";//circle, rectangle
@@ -22,9 +25,18 @@ public class PhysicsObject extends InteractiveGraphicalObject {
 
         //add physics collision calculation
     }
-    public void applyForce(double fx, double fy){
-        velocity.x = velocity.x + (fx/mass);
-        velocity.y = velocity.y + (fy/mass);
+    private void calculateForce(double fx, double fy, double dt){
+        velocity.x = velocity.x + (fx/mass)*dt;
+        velocity.y = velocity.y + (fy/mass)*dt;
+    }
+    private void calculateForces(double dt){
+        for (Vec2d force : forces){
+            calculateForce(force.x,force.y,dt);
+        }
+        forces.clear();
+    }
+    public void applyForce(double vx, double vy){
+        forces.add(new Vec2d(vx,vy));
     }
     public void applyImpulse(double ix, double iy){
         //TODO Impulse

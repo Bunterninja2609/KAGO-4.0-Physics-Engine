@@ -38,7 +38,7 @@ public class ProgramController {
      */
     public void startProgram() {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
-        testObject = new TestObject(200, 200, 100, 100, 10, 0);
+        testObject = new TestObject(200, 200, 100, 100, 1, 0);
         viewController.draw(testObject);
         viewController.register(testObject);
         world.addPhysicsObject(testObject);
