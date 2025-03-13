@@ -55,6 +55,7 @@ public class ProgramController {
      */
     public void updateProgram(double dt){
         System.out.println(testObject.getVelocityX());
+        testObject.applyForce(-0.1,0);
         System.out.println(testObject.getMeter());
         world.update(dt);
         
