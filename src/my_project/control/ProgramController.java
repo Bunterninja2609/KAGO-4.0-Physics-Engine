@@ -16,7 +16,8 @@ import my_project.physics.*;
 public class ProgramController {
 
     //Attribute
-    TestObject testObject;
+    TestObject testObject1;
+    TestObject testObject2;
     World world = new World(64);
 
     // Referenzen
@@ -38,10 +39,14 @@ public class ProgramController {
      */
     public void startProgram() {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
-        testObject = new TestObject(200, 200, 100, 100, 1, 0);
-        viewController.draw(testObject);
-        viewController.register(testObject);
-        world.addPhysicsObject(testObject);
+        testObject1 = new TestObject(100, 200, 100, 100, 1, 0);
+        testObject2 = new TestObject(500, 200, 100, 100, -1, 0);
+        viewController.draw(testObject1);
+        viewController.draw(testObject2);
+        viewController.register(testObject1);
+        viewController.register(testObject2);
+        world.addPhysicsObject(testObject1);
+        world.addPhysicsObject(testObject2);
         //Damit die draw-Methode des Objekts hinter firstHouse aufgerufen wird,
         //muss dem ViewController-Objekt mitgeteilt werden, dass es das House-Objekt zeichnen soll.
 
@@ -54,9 +59,9 @@ public class ProgramController {
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-        System.out.println(testObject.getVelocityX());
-        testObject.applyForce(-0.1,0);
-        System.out.println(testObject.getMeter());
+        System.out.println("-------");
+        testObject1.applyForce(0,0);
+        System.out.println(testObject1.getMeter());
         world.update(dt);
         
     }

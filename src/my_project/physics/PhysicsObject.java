@@ -6,6 +6,7 @@ import KAGO_framework.view.DrawTool;
 import com.sun.javafx.geom.Vec2d;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PhysicsObject extends InteractiveGraphicalObject {
     protected double mass = 1;//kg
@@ -22,7 +23,7 @@ public class PhysicsObject extends InteractiveGraphicalObject {
         physicsPosition.x = physicsPosition.x + dt*velocity.x;
         physicsPosition.y = physicsPosition.y + dt*velocity.y;
         calculatePosition();
-
+        calculateForces(dt);
         //add physics collision calculation
     }
     private void calculateForce(double fx, double fy, double dt){
@@ -96,4 +97,22 @@ public class PhysicsObject extends InteractiveGraphicalObject {
         x = physicsPosition.x*pixelPerMeterRatio;
         y = physicsPosition.y*pixelPerMeterRatio;
     }
+    public boolean collidesWithPhysicsObject(PhysicsObject otherPhysicsObject){
+        if(Objects.equals(hitboxShape, "circle")){
+            if(Objects.equals(otherPhysicsObject.getHitboxShape(), "circle")){
+                if ( x < otherPhysicsObject.getX()+otherPhysicsObject.getWidth() && x + width > otherPhysicsObject.getX() && y < otherPhysicsObject.getY() + otherPhysicsObject.getHeight() && y + height > otherPhysicsObject.getY() ) return true;
+            }else{
+                if ( x < otherPhysicsObject.getX()+2*otherPhysicsObject.getRadius() && x + width > otherPhysicsObject.getX() && y < otherPhysicsObject.getY() + 2*otherPhysicsObject.getRadius() && y + height > otherPhysicsObject.getY() ) return true;
+            }
+        }else{
+            if(otherPhysicsObject.getHitboxShape() == "circle"){
+                if ( otherPhysicsObject.getX() < x+2*radius && otherPhysicsObject.getX() + otherPhysicsObject.getWidth() > x && otherPhysicsObject.getY() < y + 2*radius && otherPhysicsObject.getY() + otherPhysicsObject.getHeight() > y ) return true;
+            }else{
+                if(getDistanceTo(otherPhysicsObject)<=radius+otherPhysicsObject.getRadius()) return true;
+            }
+        }
+
+        return false;
+    }
+
 }

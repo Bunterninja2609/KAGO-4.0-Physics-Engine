@@ -18,8 +18,9 @@ public class World {
         for (PhysicsObject physicsObject : physicsObjects) {
             physicsObject.physicsUpdate(dt);
         }
+        handleCollisions();
     }
-    public void resolveCollisionPoints() {
+    private void resolveCollisionPoints() {
         for (CollisionPoint collisionPoint : collisionPoints) {
             collisionPoint.resolveCollision();
         }
@@ -34,6 +35,21 @@ public class World {
         p.setMeter(pixelPerMeterRatio);
         //*/
 
+    }
+    private void handleCollisions(){
+        ArrayList<PhysicsObject> physicsObjectsAlreadyCalculated = new ArrayList<PhysicsObject>();
+        for (PhysicsObject physicsObject : physicsObjects) {
+            for (PhysicsObject physicsObjectToCheck : physicsObjects) {
+                if ( (! physicsObjectToCheck.equals(physicsObject)) && (! physicsObjectsAlreadyCalculated.contains(physicsObjectToCheck)) ) {
+                    if (physicsObject.collidesWithPhysicsObject(physicsObjectToCheck)) {
+                        createCollisionPoint(physicsObjectToCheck, physicsObject);
+                        System.out.println("YAY");
+                    }
+                }
+            }
+
+            physicsObjectsAlreadyCalculated.add(physicsObject);
+        }
     }
 
 }
