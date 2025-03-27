@@ -40,7 +40,7 @@ public class ProgramController {
     public void startProgram() {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
         testObject1 = new TestObject(100, 200, 100, 100, 1, 0);
-        testObject2 = new TestObject(500, 200, 100, 100, -1, 0);
+        testObject2 = new TestObject(500, 200, 100, 10, -1, 0);
         viewController.draw(testObject1);
         viewController.draw(testObject2);
         viewController.register(testObject1);
@@ -61,7 +61,7 @@ public class ProgramController {
     public void updateProgram(double dt){
         System.out.println("-------");
         testObject1.applyForce(0,0);
-        System.out.println(testObject1.getMeter());
+        System.out.println(testObject1.getWidth());
         world.update(dt);
         
     }

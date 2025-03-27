@@ -13,6 +13,7 @@ public class TestObject extends PhysicsObject {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.radius = 0;
         hitboxShape = "rectangle";
         this.velocity = new Vec2d(vx, vy);
 

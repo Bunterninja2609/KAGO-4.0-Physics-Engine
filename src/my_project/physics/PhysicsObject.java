@@ -100,19 +100,22 @@ public class PhysicsObject extends InteractiveGraphicalObject {
     public boolean collidesWithPhysicsObject(PhysicsObject otherPhysicsObject){
         if(Objects.equals(hitboxShape, "circle")){
             if(Objects.equals(otherPhysicsObject.getHitboxShape(), "circle")){
+                //circle and circle
                 if ( x < otherPhysicsObject.getX()+otherPhysicsObject.getWidth() && x + width > otherPhysicsObject.getX() && y < otherPhysicsObject.getY() + otherPhysicsObject.getHeight() && y + height > otherPhysicsObject.getY() ) return true;
             }else{
+                //circle and rectangle
                 if ( x < otherPhysicsObject.getX()+2*otherPhysicsObject.getRadius() && x + width > otherPhysicsObject.getX() && y < otherPhysicsObject.getY() + 2*otherPhysicsObject.getRadius() && y + height > otherPhysicsObject.getY() ) return true;
             }
         }else{
-            if(otherPhysicsObject.getHitboxShape() == "circle"){
+            if(Objects.equals(otherPhysicsObject.getHitboxShape(), "circle")){
+                //rectangle and circle
                 if ( otherPhysicsObject.getX() < x+2*radius && otherPhysicsObject.getX() + otherPhysicsObject.getWidth() > x && otherPhysicsObject.getY() < y + 2*radius && otherPhysicsObject.getY() + otherPhysicsObject.getHeight() > y ) return true;
             }else{
+                //rectangle and rectangle
                 if(getDistanceTo(otherPhysicsObject)<=radius+otherPhysicsObject.getRadius()) return true;
             }
         }
-
-        return false;
+        return false || collidesWith(otherPhysicsObject);
     }
 
 }

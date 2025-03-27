@@ -19,6 +19,7 @@ public class World {
             physicsObject.physicsUpdate(dt);
         }
         handleCollisions();
+        resolveCollisionPoints();
     }
     private void resolveCollisionPoints() {
         for (CollisionPoint collisionPoint : collisionPoints) {
