@@ -23,8 +23,8 @@ public class CollisionPoint {
     public void resolveCollision() {
         //TODO Impulserhaltungssatz
         removeOverlap();
-        object1.setVelocity(new Vec2d(0, 0));
-        object2.setVelocity(new Vec2d(0, 0));
+        object1.setVelocity(-object1.getVelocityX(), -object1.getVelocityY());
+        object2.setVelocity(-object2.getVelocityX(), -object2.getVelocityY());
     }
     private void removeOverlap() {
         while (object1.collidesWithPhysicsObject(object2)) {

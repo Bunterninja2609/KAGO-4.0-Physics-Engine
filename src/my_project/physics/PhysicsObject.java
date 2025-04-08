@@ -49,6 +49,8 @@ public class PhysicsObject extends InteractiveGraphicalObject {
         this.velocity = velocity;
     }
 
+    public void setVelocity(double vx, double vy) {this.velocity = new Vec2d(vx, vy);}
+
     public Vec2d getVelocity() {
         return velocity;
     }
