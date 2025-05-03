@@ -1,6 +1,7 @@
 package my_project.physics;
 
 import com.sun.javafx.geom.Vec2d;
+import com.sun.javafx.geom.Vec4d;
 
 import java.util.Vector;
 
@@ -35,5 +36,16 @@ public class CollisionPoint {
             object1.setPosition(oX1, oY1);
             object2.setPosition(oX2, oY2);
         }
+    }
+    private void conserveMomentum(){
+
+    }
+    private Vec2d[] conserveMomentumXY(double vx1, double vy1, double vx2, double vy2, double m1, double m2) {
+        return new Vec2d[] {};
+    }
+    private Vec2d rotateAroundCenter(double x, double y, double cX, double cY, double angle) {
+        double nX = x - cX;
+        double nY = y - cY;
+        return new Vec2d(nX * Math.cos(angle)+cY, nY * Math.sin(angle)+cY);
     }
 }
