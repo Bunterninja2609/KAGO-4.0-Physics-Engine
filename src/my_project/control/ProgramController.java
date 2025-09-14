@@ -42,8 +42,9 @@ public class ProgramController {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
         testObject1 = new TestObject(100, 200, 100, 100, 1, 1, false);
         testObject2 = new TestObject(300, 200, 10, 10, 0, 0, false);
-        testObject3 = new TestObject(000, 600, 1000, 300, 0, 0, true);
+        testObject3 = new TestObject(000, 600, 1000, 300, 0, 0, false);
         testObject1.setMass(10000);
+        testObject1.setMass(100000000);
         viewController.draw(testObject1);
         viewController.draw(testObject2);
         viewController.draw(testObject3);

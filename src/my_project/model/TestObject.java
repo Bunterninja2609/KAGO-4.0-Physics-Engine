@@ -23,6 +23,7 @@ public class TestObject extends PhysicsObject {
     @Override
     public void draw(DrawTool drawTool) {
         drawHitbox(drawTool);
+
     }
     @Override
     public void update(double dt){

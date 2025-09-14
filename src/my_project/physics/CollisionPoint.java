@@ -20,6 +20,7 @@ public class CollisionPoint {
         this.object1 = object1;
         this.object2 = object2;
         this.precisionFactor = 0.001;
+        this.tangent = object1.getDirectionTo(object2);
     }
     public void resolveCollision() {
         //TODO Impulserhaltungssatz
@@ -60,19 +61,28 @@ public class CollisionPoint {
         double nY = y - cY;
         return new Vec2d(nX * Math.cos(angle)+cY, nY * Math.sin(angle)+cY);
     }
+
     private void conserveImpulse(PhysicsObject object1, PhysicsObject object2) {
         if (!(object1.isStatic || object2.isStatic)) {
-            double m1 = object1.getMass();
-            double m2 = object2.getMass();
+            double mass1 = object1.getMass();
+            double mass2 = object2.getMass();
             double vx1 = object1.getVelocityX();
             double vy1 = object1.getVelocityY();
             double vx2 = object2.getVelocityX();
             double vy2 = object2.getVelocityY();
 
-            double nvx1 = (2*m2*vx2+(m1-m2)*vx1)/(m1+m2);
-            double nvx2 = (2*m1*vx1+(m2-m1)*vx2)/(m1+m2);
-            double nvy1 = (2*m2*vy2+(m1-m2)*vy1)/(m1+m2);
-            double nvy2 = (2*m1*vy1+(m2-m1)*vy2)/(m1+m2);
+            //velocities rotated relative to the tangent
+            double verticalVelocity1 = rotateAroundCenter(vx1, vy1, 0,0, tangent).y;
+            double horizontalVelocity1 = rotateAroundCenter(vx1, vy1, tangent, 0,0).x;
+            double verticalVelocity2 = rotateAroundCenter(vx2, vy2, tangent, 0,0).y;
+            double horizontalVelocity2 = rotateAroundCenter(vx2, vy2, tangent, 0,0).x;
+
+            double newHorizontalVelocity1 = (2 * mass2 * horizontalVelocity2 + (mass1 - mass2) * horizontalVelocity1) / (mass1 + mass2);
+            double newHorizontalVelocity2 = (2 * mass2 * horizontalVelocity1 + (mass1 - mass2) * horizontalVelocity2) / (mass1 + mass2);
+            double nvx1 = rotateAroundCenter(newHorizontalVelocity1, verticalVelocity1, 0,0, -tangent).y;
+            double nvx2 = rotateAroundCenter(newHorizontalVelocity2, verticalVelocity2, 0,0, -tangent).y;
+            double nvy1 = rotateAroundCenter(newHorizontalVelocity1, verticalVelocity1, 0,0, -tangent).x;
+            double nvy2 = rotateAroundCenter(newHorizontalVelocity2, verticalVelocity2, 0,0, -tangent).x;
             object1.setVelocity(nvx1, nvy1);
             object2.setVelocity(nvx2, nvy2);
         }else if(object1.isStatic){

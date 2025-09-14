@@ -79,6 +79,8 @@ public class PhysicsObject extends InteractiveGraphicalObject {
         }else if (hitboxShape.equals("circle")){
             drawTool.drawCircle(x,y,radius);
         }
+        drawTool.drawLine(x,y,x + velocity.x*100,y + velocity.y*100);
+        drawTool.drawText(x,y,"vx: " + velocity.x + ",vy: " + velocity.y);
     }
     public void setMeter(double pixelPerMeterRatio){
         this.pixelPerMeterRatio = pixelPerMeterRatio;
@@ -123,5 +125,7 @@ public class PhysicsObject extends InteractiveGraphicalObject {
     public Vec2d getImpulse(){
         return new Vec2d(velocity.x * mass,velocity.y * mass);
     }
-
+    public double getDirectionTo(PhysicsObject otherPhysicsObject){
+        return Math.atan2(otherPhysicsObject.getY() - y, otherPhysicsObject.getX() - x);
+    }
 }
