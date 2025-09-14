@@ -24,17 +24,29 @@ public class CollisionPoint {
     public void resolveCollision() {
         //TODO Impulserhaltungssatz
         removeOverlap();
-        object1.setVelocity(-object1.getVelocityX(), -object1.getVelocityY());
-        object2.setVelocity(-object2.getVelocityX(), -object2.getVelocityY());
+        Vec2d i1 = object1.getImpulse();
+        Vec2d i2 = object2.getImpulse();
+        conserveImpulse(object1, object2);
     }
     private void removeOverlap() {
+
         while (object1.collidesWithPhysicsObject(object2)) {
             double oX1 = object1.getX() - object1.getVelocityX() * precisionFactor;
             double oY1 = object1.getY() - object1.getVelocityY() * precisionFactor;
             double oX2 = object2.getX() - object2.getVelocityX() * precisionFactor;
             double oY2 = object2.getY() - object2.getVelocityY() * precisionFactor;
-            object1.setPosition(oX1, oY1);
-            object2.setPosition(oX2, oY2);
+
+            if (!(object1.isStatic || object2.isStatic)) {
+                object1.setPosition(oX1, oY1);
+                object2.setPosition(oX2, oY2);
+            }else if(!object1.isStatic){
+                object1.setPosition(oX1, oY1);
+            }else if(!object2.isStatic){
+                object2.setPosition(oX2, oY2);
+            }else{
+                object1.setPosition(oX1, oY1);
+                object2.setPosition(oX2, oY2);
+            }
         }
     }
     private void conserveMomentum(){
@@ -47,5 +59,26 @@ public class CollisionPoint {
         double nX = x - cX;
         double nY = y - cY;
         return new Vec2d(nX * Math.cos(angle)+cY, nY * Math.sin(angle)+cY);
+    }
+    private void conserveImpulse(PhysicsObject object1, PhysicsObject object2) {
+        if (!(object1.isStatic || object2.isStatic)) {
+            double m1 = object1.getMass();
+            double m2 = object2.getMass();
+            double vx1 = object1.getVelocityX();
+            double vy1 = object1.getVelocityY();
+            double vx2 = object2.getVelocityX();
+            double vy2 = object2.getVelocityY();
+
+            double nvx1 = (2*m2*vx2+(m1-m2)*vx1)/(m1+m2);
+            double nvx2 = (2*m1*vx1+(m2-m1)*vx2)/(m1+m2);
+            double nvy1 = (2*m2*vy2+(m1-m2)*vy1)/(m1+m2);
+            double nvy2 = (2*m1*vy1+(m2-m1)*vy2)/(m1+m2);
+            object1.setVelocity(nvx1, nvy1);
+            object2.setVelocity(nvx2, nvy2);
+        }else if(object1.isStatic){
+            object2.setVelocity(-object2.getVelocityX(), -object2.getVelocityY());
+        }else if(object2.isStatic){
+            object1.setVelocity(-object1.getVelocityX(), -object1.getVelocityY());
+        }
     }
 }

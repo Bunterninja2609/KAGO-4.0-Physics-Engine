@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class TestObject extends PhysicsObject {
 
-    public TestObject(double x, double y, double width, double height, double vx, double vy) {
+    public TestObject(double x, double y, double width, double height, double vx, double vy, boolean isStatic) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -16,6 +16,7 @@ public class TestObject extends PhysicsObject {
         this.radius = 0;
         hitboxShape = "rectangle";
         this.velocity = new Vec2d(vx, vy);
+        this.isStatic = isStatic;
 
     }
 

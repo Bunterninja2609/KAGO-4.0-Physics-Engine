@@ -18,6 +18,7 @@ public class ProgramController {
     //Attribute
     TestObject testObject1;
     TestObject testObject2;
+    TestObject testObject3;
     World world = new World(64);
 
     // Referenzen
@@ -39,14 +40,19 @@ public class ProgramController {
      */
     public void startProgram() {
         //Hier wird eine lokale Referenz für ein House-Objekt angelegt.
-        testObject1 = new TestObject(100, 200, 100, 100, 1, 0);
-        testObject2 = new TestObject(500, 200, 100, 10, -1, 0);
+        testObject1 = new TestObject(100, 200, 100, 100, 1, 1, false);
+        testObject2 = new TestObject(300, 200, 10, 10, 0, 0, false);
+        testObject3 = new TestObject(000, 600, 1000, 300, 0, 0, true);
+        testObject1.setMass(10000);
         viewController.draw(testObject1);
         viewController.draw(testObject2);
+        viewController.draw(testObject3);
         viewController.register(testObject1);
         viewController.register(testObject2);
+        viewController.register(testObject3);
         world.addPhysicsObject(testObject1);
         world.addPhysicsObject(testObject2);
+        world.addPhysicsObject(testObject3);
         //Damit die draw-Methode des Objekts hinter firstHouse aufgerufen wird,
         //muss dem ViewController-Objekt mitgeteilt werden, dass es das House-Objekt zeichnen soll.
 

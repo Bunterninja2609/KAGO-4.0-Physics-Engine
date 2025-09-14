@@ -15,16 +15,23 @@ public class World {
         this.pixelPerMeterRatio = pixelPerMeterRatio;
     }
     public void update(double dt) {
+
         for (PhysicsObject physicsObject : physicsObjects) {
             physicsObject.physicsUpdate(dt);
         }
+
         handleCollisions();
+
         resolveCollisionPoints();
     }
     private void resolveCollisionPoints() {
+        int cpc = 0;
         for (CollisionPoint collisionPoint : collisionPoints) {
+            System.out.println(cpc);
             collisionPoint.resolveCollision();
+            cpc++;
         }
+        System.out.println(cpc);
         collisionPoints.removeAll(collisionPoints);
     }
     public void createCollisionPoint(PhysicsObject po1, PhysicsObject po2) {
@@ -32,7 +39,9 @@ public class World {
     }
     public void addPhysicsObject(PhysicsObject p) {
         //*
+
         physicsObjects.add(p);
+
         p.setMeter(pixelPerMeterRatio);
         //*/
 
@@ -42,7 +51,9 @@ public class World {
         for (PhysicsObject physicsObject : physicsObjects) {
             for (PhysicsObject physicsObjectToCheck : physicsObjects) {
                 if ( (! physicsObjectToCheck.equals(physicsObject)) && (! physicsObjectsAlreadyCalculated.contains(physicsObjectToCheck)) ) {
-                    if (physicsObject.collidesWithPhysicsObject(physicsObjectToCheck)) {
+                    boolean noVelocityObj1 = (physicsObject.getVelocityX() == 0 && physicsObject.getVelocityY()== 0);
+                    boolean noVelocityObj2 = (physicsObjectToCheck.getVelocityX() == 0 && physicsObjectToCheck.getVelocityY()== 0);
+                    if (physicsObject.collidesWithPhysicsObject(physicsObjectToCheck) && !(noVelocityObj1 && noVelocityObj2)) {
                         createCollisionPoint(physicsObjectToCheck, physicsObject);
                         System.out.println("YAY");
                     }

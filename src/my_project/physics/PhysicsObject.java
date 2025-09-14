@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PhysicsObject extends InteractiveGraphicalObject {
+    protected boolean isStatic;
     protected double mass = 1;//kg
     protected Vec2d velocity;//in m/s
     protected Vec2d physicsPosition = new Vec2d(0, 0); //in m
@@ -118,6 +119,9 @@ public class PhysicsObject extends InteractiveGraphicalObject {
             }
         }
         return false || collidesWith(otherPhysicsObject);
+    }
+    public Vec2d getImpulse(){
+        return new Vec2d(velocity.x * mass,velocity.y * mass);
     }
 
 }
